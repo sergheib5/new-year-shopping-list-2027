@@ -240,8 +240,14 @@ const EditableShoppingRow = ({ item, onToggle, onDelete, onSave }) => {
           {item.name || 'Unnamed Item'}
         </span>
       </div>
-      <div className="col-store col-store-hidden">
-        {/* Store badge hidden in display mode - filtering available at top */}
+      <div className="col-store">
+        <span
+          className="store-badge"
+          style={{ backgroundColor: getStoreColor(item.store || 'Other') }}
+          aria-label={`Store: ${item.store || 'Other'}`}
+        >
+          {item.store || 'Other'}
+        </span>
       </div>
       <div className="col-salad">
         <span className="salad-badge">

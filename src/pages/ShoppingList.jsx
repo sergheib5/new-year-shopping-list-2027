@@ -160,7 +160,7 @@ const ShoppingList = () => {
   // Filter items based on selected store, salad, and search query
   const filteredItems = items.filter(item => {
     // Store filter
-    const matchesStore = selectedStore === 'All' || item.store === selectedStore;
+    const matchesStore = selectedStore === 'All' || (item.store || 'Other') === selectedStore;
     
     // Salad filter
     const matchesSalad = selectedSalad === 'All' || (item.salad || 'General') === selectedSalad;
@@ -173,18 +173,41 @@ const ShoppingList = () => {
     return matchesStore && matchesSalad && matchesSearch;
   });
 
+  const completedCount = items.filter(item => item.checked).length;
+  const progressPercent = items.length ? Math.round((completedCount / items.length) * 100) : 0;
+
   return (
     <div className="shopping-list-page">
       <Header />
       <main className="main-content">
         <div className="shopping-list-container">
+          {items.length > 0 && (
+            <section className="shopping-progress" aria-label="Shopping progress">
+              <div className="shopping-progress-copy" aria-live="polite">
+                <strong>{completedCount} of {items.length} checked</strong>
+                <span>{items.length - completedCount} left to get</span>
+              </div>
+              <div
+                className="shopping-progress-track"
+                role="progressbar"
+                aria-label="Items checked"
+                aria-valuemin="0"
+                aria-valuemax={items.length}
+                aria-valuenow={completedCount}
+              >
+                <span style={{ width: `${progressPercent}%` }} />
+              </div>
+            </section>
+          )}
+
           {/* Store filter */}
           <div className="store-filter">
+            <span className="filter-group-label">Shop at</span>
             <button
               className={`filter-button ${selectedStore === 'All' ? 'active' : ''}`}
               onClick={() => setSelectedStore('All')}
             >
-              All
+              All <span className="filter-count">{items.length}</span>
             </button>
             {STORES.map(store => (
               <button
@@ -197,7 +220,7 @@ const ShoppingList = () => {
                   borderColor: getStoreColor(store)
                 }}
               >
-                {store}
+                {store} <span className="filter-count">{items.filter(item => (item.store || 'Other') === store).length}</span>
               </button>
             ))}
           </div>
@@ -205,6 +228,7 @@ const ShoppingList = () => {
           {/* Salad filter */}
           {salads.length > 0 && (
             <div className="salad-filter">
+              <span className="filter-group-label">Group by meal</span>
               <button
                 className={`filter-button filter-button-salad ${selectedSalad === 'All' ? 'active' : ''}`}
                 onClick={() => setSelectedSalad('All')}
