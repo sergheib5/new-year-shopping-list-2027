@@ -157,6 +157,12 @@ export const addCustomStore = async (rawName) => {
   return name;
 };
 
+export const deleteCustomStore = async (rawName) => {
+  const name = normalizeStoreName(rawName);
+  const storeRef = doc(db, STORES_COLLECTION, getStoreDocumentId(name));
+  await deleteDoc(storeRef);
+};
+
 // Export Functions - Get all data for CSV export
 export const getAllShoppingListItems = async () => {
   try {

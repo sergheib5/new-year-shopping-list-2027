@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useStores } from '../contexts/StoresContext';
 import AddStoreDialog from './AddStoreDialog';
 
-const ADD_STORE_VALUE = '__add_new_store__';
+const MANAGE_STORES_VALUE = '__manage_stores__';
 
 const StoreSelect = ({ value, onChange, id, name, className = 'inline-select', disabled = false, ariaLabel = 'Store', onBlur, onKeyDown, title }) => {
   const { stores } = useStores();
   const [showAddStore, setShowAddStore] = useState(false);
 
   const handleChange = (event) => {
-    if (event.target.value === ADD_STORE_VALUE) {
+    if (event.target.value === MANAGE_STORES_VALUE) {
       setShowAddStore(true);
       return;
     }
@@ -32,13 +32,16 @@ const StoreSelect = ({ value, onChange, id, name, className = 'inline-select', d
       >
         {stores.map((store) => <option key={store} value={store}>{store}</option>)}
         <option disabled>──────────</option>
-        <option value={ADD_STORE_VALUE}>＋ Add a store…</option>
+        <option value={MANAGE_STORES_VALUE}>＋ Manage stores…</option>
       </select>
       {showAddStore && (
         <AddStoreDialog
           onAdded={(store) => {
             onChange(store);
             setShowAddStore(false);
+          }}
+          onDeleted={(store) => {
+            if (value === store) onChange('Other');
           }}
           onCancel={() => setShowAddStore(false)}
         />

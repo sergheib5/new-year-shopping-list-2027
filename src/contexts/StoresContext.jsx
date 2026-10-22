@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { addCustomStore, subscribeToStores } from '../firebase/db';
+import { addCustomStore, deleteCustomStore, subscribeToStores } from '../firebase/db';
 import { DEFAULT_STORES } from '../utils/constants';
 
 const StoresContext = createContext(null);
@@ -41,7 +41,14 @@ export const StoresProvider = ({ children }) => {
     return savedName;
   }, [stores]);
 
-  const value = useMemo(() => ({ stores, addStore }), [stores, addStore]);
+  const removeStore = useCallback(async (rawName) => {
+    const nameKey = normalizeKey(rawName);
+    if (defaultStoreKeys.has(nameKey)) throw new Error('Built-in stores can’t be removed.');
+    await deleteCustomStore(rawName);
+    setCustomStores((current) => current.filter((store) => normalizeKey(store) !== nameKey));
+  }, [defaultStoreKeys]);
+
+  const value = useMemo(() => ({ stores, customStores, addStore, removeStore }), [stores, customStores, addStore, removeStore]);
   return <StoresContext.Provider value={value}>{children}</StoresContext.Provider>;
 };
 

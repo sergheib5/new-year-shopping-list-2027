@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useStores } from '../contexts/StoresContext';
 import './AddStoreDialog.css';
 
-const AddStoreDialog = ({ onAdded, onCancel }) => {
-  const { addStore, stores } = useStores();
+const AddStoreDialog = ({ onAdded, onDeleted, onCancel }) => {
+  const { addStore, customStores, removeStore, stores } = useStores();
   const dialogRef = useRef(null);
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [storeToDelete, setStoreToDelete] = useState('');
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -46,6 +47,20 @@ const AddStoreDialog = ({ onAdded, onCancel }) => {
     }
   };
 
+  const handleDelete = async (store) => {
+    setIsSaving(true);
+    setError('');
+    try {
+      await removeStore(store);
+      setStoreToDelete('');
+      onDeleted?.(store);
+    } catch (deleteError) {
+      setError(deleteError?.message || 'Could not remove this store. Try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <dialog
       ref={dialogRef}
@@ -58,8 +73,32 @@ const AddStoreDialog = ({ onAdded, onCancel }) => {
     >
       <form onSubmit={handleSubmit}>
         <div className="add-store-icon" aria-hidden="true">🏬</div>
-        <h2 id="add-store-title">Add a store</h2>
-        <p>It will be available to everyone using this shopping list.</p>
+        <h2 id="add-store-title">Manage stores</h2>
+        <p>Changes sync for everyone using this shopping list. Items assigned to a removed store keep their saved store label.</p>
+        <section className="custom-store-list" aria-label="Custom stores">
+          <h3>Your custom stores</h3>
+          {customStores.length === 0 ? (
+            <p className="custom-store-empty">No custom stores yet.</p>
+          ) : (
+            <ul>
+              {customStores.map((store) => (
+                <li key={store}>
+                  <span>{store}</span>
+                  {storeToDelete === store ? (
+                    <span className="custom-store-confirm">
+                      <span>Remove?</span>
+                      <button type="button" onClick={() => handleDelete(store)} disabled={isSaving}>Delete</button>
+                      <button type="button" onClick={() => setStoreToDelete('')} disabled={isSaving}>Keep</button>
+                    </span>
+                  ) : (
+                    <button type="button" className="custom-store-delete" aria-label={`Remove ${store}`} onClick={() => setStoreToDelete(store)} disabled={isSaving}>Remove</button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+        <h3 className="add-store-form-heading">Add another store</h3>
         <label htmlFor="new-store-name">Store name</label>
         <input
           id="new-store-name"
@@ -80,7 +119,7 @@ const AddStoreDialog = ({ onAdded, onCancel }) => {
             Cancel
           </button>
           <button type="submit" className="add-store-submit" onClick={handleSubmit} disabled={isSaving || !name.trim()}>
-            {isSaving ? 'Adding…' : 'Add store'}
+            {isSaving ? 'Saving…' : 'Add store'}
           </button>
         </div>
       </form>

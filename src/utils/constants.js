@@ -1,6 +1,6 @@
 // Shared constants across the application
 
-export const DEFAULT_STORES = ['Fresh Farm', 'Aldi', 'Costco', "Binny's", 'Other'];
+export const DEFAULT_STORES = ['Fresh Farm', 'Aldi', 'Costco', 'Other'];
 export const STORES = DEFAULT_STORES;
 
 export const getStoreColor = (store) => {

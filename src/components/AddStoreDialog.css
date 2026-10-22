@@ -40,6 +40,76 @@
   line-height: 1.45;
 }
 
+.custom-store-list {
+  margin: 18px 0 20px;
+  padding: 14px;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+  background: #f8faff;
+}
+
+.custom-store-list h3,
+.add-store-form-heading {
+  margin: 0 0 10px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.custom-store-list ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.custom-store-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 38px;
+  color: #253247;
+  font-size: 14px;
+}
+
+.custom-store-list .custom-store-empty {
+  margin: 0;
+  font-size: 13px;
+}
+
+.custom-store-delete,
+.custom-store-confirm button {
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid #d7deea;
+  border-radius: 9px;
+  color: #526176;
+  background: white;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.custom-store-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #586579;
+  font-size: 12px;
+}
+
+.custom-store-confirm button:first-of-type {
+  border-color: #d9a4a4;
+  color: #9b2929;
+}
+
+.add-store-form-heading {
+  margin-bottom: 8px;
+}
+
 .add-store-dialog label {
   display: block;
   margin-bottom: 6px;
