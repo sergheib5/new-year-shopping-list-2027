@@ -5,6 +5,8 @@ import './InlineAddRow.css';
 
 const InlineAddRow = ({ onSave }) => {
   const salads = useSalads();
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     store: 'Fresh Farm',
@@ -44,23 +46,26 @@ const InlineAddRow = ({ onSave }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.name.trim()) {
-      onSave(formData);
-      // Reset form for next item
+    const name = formData.name.trim();
+    if (!name || isSaving) return;
+
+    setIsSaving(true);
+    setSaveError('');
+    try {
+      await onSave({ ...formData, name });
       setFormData({
         name: '',
-        store: 'Fresh Farm',
-        salad: 'General',
+        store: formData.store,
+        salad: formData.salad,
         quantity: ''
       });
-      // Focus back on name input immediately for continuous flow
-      setTimeout(() => {
-        if (nameInputRef.current) {
-          nameInputRef.current.focus();
-        }
-      }, 0);
+      setTimeout(() => nameInputRef.current?.focus(), 0);
+    } catch (error) {
+      setSaveError(error?.message || 'Could not save this item. Your entry is still here; please try again.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -68,7 +73,7 @@ const InlineAddRow = ({ onSave }) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       if (formData.name.trim()) {
-        handleSubmit(e);
+        void handleSubmit(e);
       } else {
         // If name is empty, just focus on name input
         if (nameInputRef.current) {
@@ -101,9 +106,11 @@ const InlineAddRow = ({ onSave }) => {
           value={formData.name}
           onChange={(e) => handleChange('name', e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Add item"
+          placeholder="Item name"
+          aria-label="Item name"
           className="inline-input item-input"
           required
+          disabled={isSaving}
         />
       </div>
       <div className="col-quantity-compact col-quantity-first">
@@ -113,7 +120,9 @@ const InlineAddRow = ({ onSave }) => {
           onChange={(e) => handleChange('quantity', e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Qty"
+          aria-label="Quantity"
           className="inline-input quantity-input"
+          disabled={isSaving}
         />
       </div>
       <div className="col-store-compact">
@@ -123,6 +132,8 @@ const InlineAddRow = ({ onSave }) => {
           className="inline-select"
           onKeyDown={handleKeyDown}
           title={formData.store}
+          aria-label="Store"
+          disabled={isSaving}
         >
           {STORES.map(store => (
             <option key={store} value={store}>{store}</option>
@@ -136,6 +147,8 @@ const InlineAddRow = ({ onSave }) => {
           className="inline-select"
           onKeyDown={handleKeyDown}
           title={formData.salad}
+          aria-label="List or meal"
+          disabled={isSaving}
         >
           <option value="General">General</option>
           {salads.map(salad => (
@@ -143,6 +156,10 @@ const InlineAddRow = ({ onSave }) => {
           ))}
         </select>
       </div>
+      <button type="submit" className="inline-add-submit" disabled={isSaving || !formData.name.trim()}>
+        {isSaving ? 'Saving…' : 'Add item'}
+      </button>
+      {saveError && <p className="inline-add-error" role="alert">{saveError}</p>}
     </form>
   );
 };

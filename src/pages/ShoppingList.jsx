@@ -125,7 +125,7 @@ const ShoppingList = () => {
       // Add row stays visible for continuous adding
     } catch (error) {
       console.error('Error adding item:', error);
-      alert('Failed to add item. Please try again.');
+      throw error;
     }
   };
 
@@ -257,7 +257,7 @@ const ShoppingList = () => {
                   {searchQuery.trim() 
                     ? `No items found matching "${searchQuery}"`
                     : selectedStore === 'All' && selectedSalad === 'All'
-                      ? 'No items in your shopping list yet' 
+                      ? 'Your list is ready. Add your first item above.'
                       : selectedStore !== 'All' && selectedSalad === 'All'
                         ? `No items for ${selectedStore} yet`
                         : selectedStore === 'All' && selectedSalad !== 'All'
