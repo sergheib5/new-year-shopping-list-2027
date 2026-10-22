@@ -13,12 +13,14 @@ import {
   toggleShoppingItem,
   deleteShoppingItem 
 } from '../firebase/db';
-import { STORES, getStoreColor } from '../utils/constants';
+import { getStoreColor } from '../utils/constants';
+import { useStores } from '../contexts/StoresContext';
 import { triggerStoreConfetti, triggerCompleteConfetti } from '../utils/confetti';
 import './ShoppingList.css';
 
 const ShoppingList = () => {
   const salads = useSalads();
+  const { stores } = useStores();
   const [items, setItems] = useState([]);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [selectedStore, setSelectedStore] = useState('All');
@@ -217,7 +219,7 @@ const ShoppingList = () => {
             >
               All <span className="filter-count">{items.length}</span>
             </button>
-            {STORES.map(store => (
+            {stores.map(store => (
               <button
                 key={store}
                 className={`filter-button ${selectedStore === store ? 'active' : ''}`}

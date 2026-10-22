@@ -7,13 +7,15 @@ import {
   onSnapshot,
   query,
   orderBy,
-  getDocs
+  getDocs,
+  runTransaction
 } from 'firebase/firestore';
 import { db } from './config';
 
 // Shopping List Collection
 const SHOPPING_LIST_COLLECTION = 'shoppingList';
 const MENU_COLLECTION = 'menu';
+const STORES_COLLECTION = 'stores';
 
 // Shopping List Functions
 export const subscribeToShoppingList = (callback, onError) => {
@@ -117,6 +119,48 @@ export const deleteMenuItem = async (id) => {
     console.error('Error deleting menu item:', error);
     throw error;
   }
+};
+
+// Shared Store Functions
+export const subscribeToStores = (callback, onError) => {
+  return onSnapshot(
+    collection(db, STORES_COLLECTION),
+    (snapshot) => {
+      const stores = snapshot.docs.map(storeDoc => ({
+        id: storeDoc.id,
+        ...storeDoc.data()
+      }));
+      callback(stores);
+    },
+    (error) => {
+      console.error('Error subscribing to stores:', error);
+      if (onError) onError(error);
+    }
+  );
+};
+
+const normalizeStoreName = (name) => name.trim().replace(/\s+/g, ' ');
+const getStoreDocumentId = (name) => normalizeStoreName(name).toLocaleLowerCase();
+
+export const addCustomStore = async (rawName) => {
+  const name = normalizeStoreName(rawName);
+  if (!name || name.length > 40) {
+    throw new Error('Store names must be between 1 and 40 characters.');
+  }
+  if (name.includes('/') || name === '.' || name === '..') {
+    throw new Error('That store name can’t be used.');
+  }
+
+  const storeRef = doc(db, STORES_COLLECTION, getStoreDocumentId(name));
+  await runTransaction(db, async (transaction) => {
+    const existingStore = await transaction.get(storeRef);
+    if (existingStore.exists()) {
+      throw new Error('A store with that name already exists.');
+    }
+    transaction.set(storeRef, { name, createdAt: new Date() });
+  });
+
+  return name;
 };
 
 // Export Functions - Get all data for CSV export

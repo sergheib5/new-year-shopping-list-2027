@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import { STORES } from '../utils/constants';
 import useSalads from '../hooks/useSalads';
+import StoreSelect from './StoreSelect';
 import './InlineAddRow.css';
 
 const InlineAddRow = ({ onSave }) => {
@@ -106,20 +106,14 @@ const InlineAddRow = ({ onSave }) => {
       </div>
       <div className="col-store-compact">
         <label className="inline-field-label" htmlFor="new-item-store">Store</label>
-        <select
+        <StoreSelect
           id="new-item-store"
           value={formData.store}
-          onChange={(e) => handleChange('store', e.target.value)}
-          className="inline-select"
+          onChange={(value) => handleChange('store', value)}
           onKeyDown={handleKeyDown}
-          title={formData.store}
           aria-label="Store"
           disabled={isSaving}
-        >
-          {STORES.map(store => (
-            <option key={store} value={store}>{store}</option>
-          ))}
-        </select>
+        />
       </div>
       {salads.length > 0 ? (
         <div className="col-salad-compact">

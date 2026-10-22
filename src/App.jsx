@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ShoppingList from './pages/ShoppingList';
 import Menu from './pages/Menu';
 import ErrorBoundary from './components/ErrorBoundary';
+import { StoresProvider } from './contexts/StoresContext';
 import { useNewYearCountdown } from './hooks/useNewYearCountdown';
 import './App.css';
 
@@ -36,12 +37,14 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <Router basename={basePath}>
-        <Routes>
-          <Route path="/" element={<ShoppingList />} />
-          <Route path="/menu" element={<Menu />} />
-        </Routes>
-      </Router>
+      <StoresProvider>
+        <Router basename={basePath}>
+          <Routes>
+            <Route path="/" element={<ShoppingList />} />
+            <Route path="/menu" element={<Menu />} />
+          </Routes>
+        </Router>
+      </StoresProvider>
     </ErrorBoundary>
   );
 }

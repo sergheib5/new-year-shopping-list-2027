@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import useSalads from '../hooks/useSalads';
+import StoreSelect from './StoreSelect';
 import './ShoppingItemForm.css';
-
-const STORES = ['Fresh Farm', 'Aldi', 'Costco', "Binny's", 'Other'];
 
 const ShoppingItemForm = ({ item, onSave, onCancel }) => {
   const salads = useSalads();
@@ -72,17 +71,14 @@ const ShoppingItemForm = ({ item, onSave, onCancel }) => {
 
           <div className="form-group">
             <label htmlFor="store">Store</label>
-            <select
+            <StoreSelect
               id="store"
               name="store"
               value={formData.store}
-              onChange={handleChange}
+              onChange={(value) => setFormData((prev) => ({ ...prev, store: value }))}
               className="form-select"
-            >
-              {STORES.map(store => (
-                <option key={store} value={store}>{store}</option>
-              ))}
-            </select>
+              ariaLabel="Store"
+            />
           </div>
 
           <div className="form-group">

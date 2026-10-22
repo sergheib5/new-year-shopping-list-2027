@@ -1,6 +1,7 @@
 // Shared constants across the application
 
-export const STORES = ['Fresh Farm', 'Aldi', 'Costco', "Binny's", 'Other'];
+export const DEFAULT_STORES = ['Fresh Farm', 'Aldi', 'Costco', "Binny's", 'Other'];
+export const STORES = DEFAULT_STORES;
 
 export const getStoreColor = (store) => {
   const storeColors = {
@@ -10,7 +11,10 @@ export const getStoreColor = (store) => {
     "Binny's": '#212121', // black
     'Other': '#9e9e9e' // gray
   };
-  return storeColors[store] || storeColors['Other'];
+  if (storeColors[store]) return storeColors[store];
+  const customColors = ['#5267a9', '#7050a0', '#087f8c', '#a35c18', '#526b36'];
+  const hash = [...(store || '')].reduce((value, character) => value + character.charCodeAt(0), 0);
+  return customColors[hash % customColors.length];
 };
 
 // Auto-save debounce time in milliseconds

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { STORES, getStoreColor, AUTO_SAVE_DEBOUNCE_MS, CLICK_OUTSIDE_DELAY_MS } from '../utils/constants';
+import { getStoreColor, AUTO_SAVE_DEBOUNCE_MS, CLICK_OUTSIDE_DELAY_MS } from '../utils/constants';
 import useSalads from '../hooks/useSalads';
+import StoreSelect from './StoreSelect';
 import './EditableShoppingRow.css';
 
 const EditableShoppingRow = ({ item, onToggle, onDelete, onSave }) => {
@@ -161,17 +162,13 @@ const EditableShoppingRow = ({ item, onToggle, onDelete, onSave }) => {
           />
         </div>
         <div className="col-store">
-          <select
+          <StoreSelect
             value={editData.store}
-            onChange={(e) => handleChange('store', e.target.value)}
+            onChange={(value) => handleChange('store', value)}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
-            className="inline-select"
-          >
-            {STORES.map(store => (
-              <option key={store} value={store}>{store}</option>
-            ))}
-          </select>
+            ariaLabel="Store"
+          />
         </div>
         <div className="col-salad">
           <select

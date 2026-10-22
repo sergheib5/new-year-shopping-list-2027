@@ -1,0 +1,118 @@
+.add-store-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(100% - 32px, 440px);
+  margin: auto;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  color: #1f2937;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+}
+
+.add-store-dialog::backdrop {
+  background: rgba(19, 32, 56, 0.48);
+  backdrop-filter: blur(3px);
+}
+
+.add-store-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  place-items: center;
+  border-radius: 14px;
+  background: #eef3ff;
+  font-size: 23px;
+}
+
+.add-store-dialog h2 {
+  margin-bottom: 6px;
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+.add-store-dialog p {
+  margin-bottom: 18px;
+  color: #5d6878;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.add-store-dialog label {
+  display: block;
+  margin-bottom: 6px;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.add-store-dialog input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #cbd3df;
+  border-radius: 10px;
+  background: white;
+  color: #1f2937;
+  font: inherit;
+  font-size: 16px;
+}
+
+.add-store-dialog input:focus {
+  outline: 3px solid rgba(82, 109, 224, 0.25);
+  border-color: #526de0;
+}
+
+.add-store-dialog .add-store-error {
+  margin: 8px 0 0;
+  color: #a12622;
+  font-size: 13px;
+}
+
+.add-store-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.add-store-actions button {
+  min-height: 48px;
+  flex: 1;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-store-actions button:focus-visible {
+  outline: 3px solid #526de0;
+  outline-offset: 2px;
+}
+
+.add-store-cancel {
+  color: #354052;
+  background: #eef1f5;
+}
+
+.add-store-submit {
+  color: white;
+  background: #3157a5;
+}
+
+.add-store-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (max-width: 480px) {
+  .add-store-dialog {
+    width: calc(100% - 32px);
+    padding: 22px;
+    border-radius: 22px;
+  }
+}
