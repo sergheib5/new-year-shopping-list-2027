@@ -1,4 +1,4 @@
-# New Year Shopping List 2026 🎉
+# New Year Shopping List 2027 🎉
 
 A collaborative Progressive Web App (PWA) for managing shopping lists and menus for your New Year party. Built with React, Vite, and Firebase.
 
@@ -6,11 +6,11 @@ A collaborative Progressive Web App (PWA) for managing shopping lists and menus 
 
 - 🛒 **Shopping List**: Add items with store, quantity, and notes
 - 🍽️ **Menu Planner**: Plan daily meals, salads, and snacks
-- ⏰ **New Year Countdown**: Live countdown to New Year 2026 in the header
+- ⏰ **New Year Countdown**: Live countdown to New Year 2027 in the header
 - 📱 **Mobile-Friendly**: Optimized for mobile devices (Android & iOS)
 - 🔄 **Real-time Sync**: Changes sync instantly across all users via Firebase
 - 📲 **PWA**: Install as an app on your device
-- 🎨 **Modern Design**: Sleek New Year 2026 themed interface
+- 🎨 **Modern Design**: Sleek New Year 2027 themed interface
 
 ## Prerequisites
 
@@ -94,7 +94,7 @@ The built files will be in the `dist` folder.
 ## Project Structure
 
 ```
-shopping-list/
+new-year-shopping-list-2027/
 ├── public/
 │   ├── manifest.json      # PWA manifest
 │   └── sw.js              # Service worker
@@ -188,4 +188,4 @@ For issues or questions, please open an issue on GitHub.
 
 ---
 
-Made with ❤️ for New Year 2026 🎉
+Made with ❤️ for New Year 2027 🎉
