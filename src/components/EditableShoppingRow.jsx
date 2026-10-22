@@ -181,7 +181,7 @@ const EditableShoppingRow = ({ item, onToggle, onDelete, onSave }) => {
             onKeyDown={handleKeyDown}
             className="inline-select"
           >
-            <option value="General">General</option>
+            <option value="General">No meal</option>
             {salads.map(salad => (
               <option key={salad} value={salad}>{salad}</option>
             ))}
@@ -245,7 +245,7 @@ const EditableShoppingRow = ({ item, onToggle, onDelete, onSave }) => {
       </div>
       <div className="col-salad">
         <span className="salad-badge">
-          {item.salad || 'General'}
+          {item.salad === 'General' || !item.salad ? 'No meal' : item.salad}
         </span>
       </div>
       <div className="col-quantity">

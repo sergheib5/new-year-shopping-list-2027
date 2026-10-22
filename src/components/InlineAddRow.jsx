@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { STORES } from '../utils/constants';
 import useSalads from '../hooks/useSalads';
 import './InlineAddRow.css';
@@ -15,30 +15,6 @@ const InlineAddRow = ({ onSave }) => {
   });
 
   const nameInputRef = useRef(null);
-  const formRef = useRef(null);
-
-  useEffect(() => {
-    // Focus on item name input when component mounts
-    if (nameInputRef.current) {
-      nameInputRef.current.focus();
-    }
-  }, []);
-
-  // Keep focus on name input for continuous flow
-  useEffect(() => {
-    // Focus on name input when form is empty (after saving)
-    const isEmpty = !formData.name.trim() && !formData.quantity.trim();
-    if (isEmpty && nameInputRef.current) {
-      // Small delay to ensure DOM is ready
-      const timeoutId = setTimeout(() => {
-        if (nameInputRef.current) {
-          nameInputRef.current.focus();
-        }
-      }, 50);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [formData.name, formData.quantity, formData.salad]);
-
   const handleChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
@@ -98,8 +74,9 @@ const InlineAddRow = ({ onSave }) => {
   };
 
   return (
-    <form className="inline-add-row" onSubmit={handleSubmit} ref={formRef}>
+    <form className="inline-add-row" onSubmit={handleSubmit}>
       <div className="col-item-wide">
+        <label className="inline-field-label" htmlFor="new-item-name">Item</label>
         <input
           ref={nameInputRef}
           type="text"
@@ -114,7 +91,9 @@ const InlineAddRow = ({ onSave }) => {
         />
       </div>
       <div className="col-quantity-compact col-quantity-first">
+        <label className="inline-field-label" htmlFor="new-item-quantity">Quantity</label>
         <input
+          id="new-item-quantity"
           type="text"
           value={formData.quantity}
           onChange={(e) => handleChange('quantity', e.target.value)}
@@ -126,7 +105,9 @@ const InlineAddRow = ({ onSave }) => {
         />
       </div>
       <div className="col-store-compact">
+        <label className="inline-field-label" htmlFor="new-item-store">Store</label>
         <select
+          id="new-item-store"
           value={formData.store}
           onChange={(e) => handleChange('store', e.target.value)}
           className="inline-select"
@@ -140,22 +121,28 @@ const InlineAddRow = ({ onSave }) => {
           ))}
         </select>
       </div>
-      <div className="col-salad-compact">
-        <select
-          value={formData.salad}
-          onChange={(e) => handleChange('salad', e.target.value)}
-          className="inline-select"
-          onKeyDown={handleKeyDown}
-          title={formData.salad}
-          aria-label="List or meal"
-          disabled={isSaving}
-        >
-          <option value="General">General</option>
-          {salads.map(salad => (
-            <option key={salad} value={salad}>{salad}</option>
-          ))}
-        </select>
-      </div>
+      {salads.length > 0 ? (
+        <div className="col-salad-compact">
+          <label className="inline-field-label" htmlFor="new-item-meal">Meal (optional)</label>
+          <select
+            id="new-item-meal"
+            value={formData.salad}
+            onChange={(e) => handleChange('salad', e.target.value)}
+            className="inline-select"
+            onKeyDown={handleKeyDown}
+            title={formData.salad}
+            aria-label="Meal (optional)"
+            disabled={isSaving}
+          >
+            <option value="General">No meal</option>
+            {salads.map(salad => (
+              <option key={salad} value={salad}>{salad}</option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <p className="inline-add-note">No meal links yet. Items stay on your shopping list; add a salad in Menu if you want to group groceries by recipe.</p>
+      )}
       <button type="submit" className="inline-add-submit" disabled={isSaving || !formData.name.trim()}>
         {isSaving ? 'Saving…' : 'Add item'}
       </button>

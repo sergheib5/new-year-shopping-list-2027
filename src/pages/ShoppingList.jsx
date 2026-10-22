@@ -220,7 +220,7 @@ const ShoppingList = () => {
                   borderColor: '#81c784'
                 }}
               >
-                General
+                No meal
               </button>
               {salads.map(salad => (
                 <button

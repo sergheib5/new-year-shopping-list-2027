@@ -10,9 +10,10 @@
 
 .header-content {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
+  position: relative;
   gap: 8px;
   max-width: 1200px;
   margin: 0 auto;
@@ -26,6 +27,8 @@
 }
 
 .export-button {
+  position: absolute;
+  right: 0;
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
@@ -64,7 +67,7 @@
   }
 
   .header-content {
-    justify-content: flex-end;
+    justify-content: center;
     gap: 6px;
   }
 
@@ -86,6 +89,7 @@
   }
 
   .export-button {
+    right: 0;
     padding: 4px 6px;
     font-size: 14px;
     min-width: 28px;

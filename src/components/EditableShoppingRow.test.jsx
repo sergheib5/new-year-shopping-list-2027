@@ -236,7 +236,7 @@ describe('EditableShoppingRow', () => {
     expect(screen.getByText('Caesar Salad')).toBeInTheDocument();
   });
 
-  it('should display General when salad is missing', () => {
+  it('should display No meal when salad is missing', () => {
     const itemWithoutSalad = { ...mockItem, salad: undefined };
     render(
       <EditableShoppingRow
@@ -247,7 +247,7 @@ describe('EditableShoppingRow', () => {
       />
     );
 
-    expect(screen.getByText('General')).toBeInTheDocument();
+    expect(screen.getByText('No meal')).toBeInTheDocument();
   });
 
   it('should update salad when select is changed', async () => {
@@ -339,7 +339,7 @@ describe('EditableShoppingRow', () => {
     const row = screen.getByText('Test Item').closest('.shopping-item-row');
     fireEvent.click(row);
 
-    expect(screen.getByText('General')).toBeInTheDocument();
+    expect(screen.getByText('No meal')).toBeInTheDocument();
     expect(screen.getByText('Caesar Salad')).toBeInTheDocument();
     expect(screen.getByText('Greek Salad')).toBeInTheDocument();
     expect(screen.getByText('Cobb Salad')).toBeInTheDocument();

@@ -6,8 +6,11 @@ const NewYearCountdown = () => {
 
   return (
     <div className="countdown-container">
-      <span className="countdown-label">🎉 New Year {targetYear}:</span>
-      <div className="countdown-time">
+      <div className="countdown-heading">
+        <span className="countdown-label">🎉 New Year {targetYear}</span>
+        <time className="countdown-date" dateTime={`${targetYear}-01-01`}>Jan 1, {targetYear}</time>
+      </div>
+      <div className="countdown-time" aria-label={`Countdown to January 1, ${targetYear}`}>
         <span className="time-unit">
           <span className="time-value">{String(days).padStart(2, '0')}</span>
           <span className="time-label">Days</span>

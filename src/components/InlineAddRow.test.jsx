@@ -3,9 +3,12 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import InlineAddRow from './InlineAddRow';
 
-// Mock useSalads hook
+const { mockSalads } = vi.hoisted(() => ({
+  mockSalads: ['Caesar Salad', 'Greek Salad', 'Cobb Salad']
+}));
+
 vi.mock('../hooks/useSalads', () => ({
-  default: () => ['Caesar Salad', 'Greek Salad', 'Cobb Salad']
+  default: () => mockSalads
 }));
 
 describe('InlineAddRow', () => {
@@ -13,28 +16,29 @@ describe('InlineAddRow', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockSalads.splice(0, mockSalads.length, 'Caesar Salad', 'Greek Salad', 'Cobb Salad');
   });
 
   it('should render form inputs', () => {
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    expect(screen.getByPlaceholderText('Add item')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Item name')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Fresh Farm')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('General')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('No meal')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Qty')).toBeInTheDocument();
   });
 
-  it('should have General as default salad value', () => {
+  it('should show No meal as the default meal link', () => {
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const saladSelect = screen.getByDisplayValue('General');
+    const saladSelect = screen.getByDisplayValue('No meal');
     expect(saladSelect).toBeInTheDocument();
   });
 
-  it('should include salad options from useSalads hook', () => {
+  it('should include meal options from the menu when available', () => {
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const saladSelect = screen.getByDisplayValue('General');
+    const saladSelect = screen.getByDisplayValue('No meal');
     
     expect(saladSelect).toBeInTheDocument();
     expect(screen.getByText('Caesar Salad')).toBeInTheDocument();
@@ -42,12 +46,20 @@ describe('InlineAddRow', () => {
     expect(screen.getByText('Cobb Salad')).toBeInTheDocument();
   });
 
-  it('should call onSave with salad field when form is submitted', async () => {
+  it('should explain the default list when no meals exist', () => {
+    mockSalads.splice(0);
+    render(<InlineAddRow onSave={mockOnSave} />);
+
+    expect(screen.queryByLabelText('Meal (optional)')).not.toBeInTheDocument();
+    expect(screen.getByText(/No meal links yet/)).toBeInTheDocument();
+  });
+
+  it('should call onSave with meal field when form is submitted', async () => {
     const user = userEvent.setup();
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const nameInput = screen.getByPlaceholderText('Add item');
-    const saladSelect = screen.getByDisplayValue('General');
+    const nameInput = screen.getByPlaceholderText('Item name');
+    const saladSelect = screen.getByDisplayValue('No meal');
 
     await user.type(nameInput, 'Lettuce');
     await user.selectOptions(saladSelect, 'Caesar Salad');
@@ -67,8 +79,8 @@ describe('InlineAddRow', () => {
     const user = userEvent.setup();
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const nameInput = screen.getByPlaceholderText('Add item');
-    const saladSelect = screen.getByDisplayValue('General');
+    const nameInput = screen.getByPlaceholderText('Item name');
+    const saladSelect = screen.getByDisplayValue('No meal');
     const quantityInput = screen.getByPlaceholderText('Qty');
 
     await user.type(nameInput, 'Tomatoes');
@@ -86,12 +98,12 @@ describe('InlineAddRow', () => {
     });
   });
 
-  it('should reset salad to General after submission', async () => {
+  it('should keep the selected meal link for adding related items', async () => {
     const user = userEvent.setup();
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const nameInput = screen.getByPlaceholderText('Add item');
-    const saladSelect = screen.getByDisplayValue('General');
+    const nameInput = screen.getByPlaceholderText('Item name');
+    const saladSelect = screen.getByDisplayValue('No meal');
 
     await user.type(nameInput, 'Test Item');
     await user.selectOptions(saladSelect, 'Cobb Salad');
@@ -101,23 +113,25 @@ describe('InlineAddRow', () => {
       expect(mockOnSave).toHaveBeenCalled();
     });
 
-    // After submission, salad should reset to General
-    expect(screen.getByDisplayValue('General')).toBeInTheDocument();
+    // Keep the selected meal so related ingredients can be added quickly.
+    await waitFor(() => {
+      expect(screen.getByDisplayValue('Cobb Salad')).toBeInTheDocument();
+    });
   });
 
-  it('should reset all fields including salad when Escape is pressed', async () => {
+  it('should reset all fields including meal link when Escape is pressed', async () => {
     const user = userEvent.setup();
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const nameInput = screen.getByPlaceholderText('Add item');
-    const saladSelect = screen.getByDisplayValue('General');
+    const nameInput = screen.getByPlaceholderText('Item name');
+    const saladSelect = screen.getByDisplayValue('No meal');
 
     await user.type(nameInput, 'Test Item');
     await user.selectOptions(saladSelect, 'Caesar Salad');
     await user.keyboard('{Escape}');
 
     await waitFor(() => {
-      expect(screen.getByDisplayValue('General')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('No meal')).toBeInTheDocument();
     });
 
     expect(nameInput.value).toBe('');
@@ -127,7 +141,7 @@ describe('InlineAddRow', () => {
     const user = userEvent.setup();
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const saladSelect = screen.getByDisplayValue('General');
+    const saladSelect = screen.getByDisplayValue('No meal');
     await user.selectOptions(saladSelect, 'Greek Salad');
 
     expect(saladSelect.value).toBe('Greek Salad');
@@ -137,8 +151,8 @@ describe('InlineAddRow', () => {
     const user = userEvent.setup();
     render(<InlineAddRow onSave={mockOnSave} />);
 
-    const nameInput = screen.getByPlaceholderText('Add item');
-    const saladSelect = screen.getByDisplayValue('General');
+    const nameInput = screen.getByPlaceholderText('Item name');
+    const saladSelect = screen.getByDisplayValue('No meal');
     const storeSelect = screen.getByDisplayValue('Fresh Farm');
 
     await user.selectOptions(saladSelect, 'Caesar Salad');
