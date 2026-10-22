@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import BottomNav from '../components/BottomNav';
 import MenuItemForm from '../components/MenuItemForm';
+import ConfirmDeleteDialog from '../components/ConfirmDeleteDialog';
 import { 
   subscribeToMenu, 
   addMenuItem,
@@ -12,6 +13,7 @@ import './Menu.css';
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
+  const [pendingDelete, setPendingDelete] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [formType, setFormType] = useState('daily'); // 'daily', 'salad', 'snack', 'drink'
@@ -51,14 +53,20 @@ const Menu = () => {
     }
   };
 
-  const handleDeleteItem = async (id) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      try {
-        await deleteMenuItem(id);
-      } catch (error) {
-        console.error('Error deleting item:', error);
-        alert('Failed to delete item. Please try again.');
-      }
+  const handleDeleteItem = (id) => {
+    const item = menuItems.find((entry) => entry.id === id);
+    setPendingDelete(item || { id, name: 'this item' });
+  };
+
+  const confirmDeleteItem = async () => {
+    if (!pendingDelete) return;
+    try {
+      await deleteMenuItem(pendingDelete.id);
+      setPendingDelete(null);
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      setPendingDelete(null);
+      alert('Failed to delete item. Please try again.');
     }
   };
 
@@ -262,6 +270,14 @@ const Menu = () => {
             onCancel={handleCloseForm}
           />
         )}
+      {pendingDelete && (
+        <ConfirmDeleteDialog
+          title="Delete menu item?"
+          description={`“${pendingDelete.name || pendingDelete.lunch || pendingDelete.dinner || 'This item'}” will be removed from your menu. This can’t be undone.`}
+          onConfirm={confirmDeleteItem}
+          onCancel={() => setPendingDelete(null)}
+        />
+      )}
       </main>
       <BottomNav />
     </div>

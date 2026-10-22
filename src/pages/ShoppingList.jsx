@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import BottomNav from '../components/BottomNav';
 import InlineAddRow from '../components/InlineAddRow';
 import EditableShoppingRow from '../components/EditableShoppingRow';
+import ConfirmDeleteDialog from '../components/ConfirmDeleteDialog';
 import SearchField from '../components/SearchField';
 import useSalads from '../hooks/useSalads';
 import { 
@@ -19,6 +20,7 @@ import './ShoppingList.css';
 const ShoppingList = () => {
   const salads = useSalads();
   const [items, setItems] = useState([]);
+  const [pendingDelete, setPendingDelete] = useState(null);
   const [selectedStore, setSelectedStore] = useState('All');
   const [selectedSalad, setSelectedSalad] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -146,14 +148,20 @@ const ShoppingList = () => {
     }
   };
 
-  const handleDeleteItem = async (id) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      try {
-        await deleteShoppingItem(id);
-      } catch (error) {
-        console.error('Error deleting item:', error);
-        alert('Failed to delete item. Please try again.');
-      }
+  const handleDeleteItem = (id) => {
+    const item = items.find((entry) => entry.id === id);
+    setPendingDelete(item || { id, name: 'this item' });
+  };
+
+  const confirmDeleteItem = async () => {
+    if (!pendingDelete) return;
+    try {
+      await deleteShoppingItem(pendingDelete.id);
+      setPendingDelete(null);
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      setPendingDelete(null);
+      alert('Failed to delete item. Please try again.');
     }
   };
 
@@ -304,6 +312,14 @@ const ShoppingList = () => {
         </div>
       </main>
       <BottomNav />
+      {pendingDelete && (
+        <ConfirmDeleteDialog
+          title="Delete shopping item?"
+          description={`“${pendingDelete.name || 'This item'}” will be removed from your list. This can’t be undone.`}
+          onConfirm={confirmDeleteItem}
+          onCancel={() => setPendingDelete(null)}
+        />
+      )}
     </div>
   );
 };
