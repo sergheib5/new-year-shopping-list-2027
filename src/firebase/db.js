@@ -8,7 +8,7 @@ import {
   query,
   orderBy,
   getDocs,
-  runTransaction
+  setDoc
 } from 'firebase/firestore';
 import { db } from './config';
 
@@ -152,13 +152,7 @@ export const addCustomStore = async (rawName) => {
   }
 
   const storeRef = doc(db, STORES_COLLECTION, getStoreDocumentId(name));
-  await runTransaction(db, async (transaction) => {
-    const existingStore = await transaction.get(storeRef);
-    if (existingStore.exists()) {
-      throw new Error('A store with that name already exists.');
-    }
-    transaction.set(storeRef, { name, createdAt: new Date() });
-  });
+  await setDoc(storeRef, { name, createdAt: new Date() });
 
   return name;
 };
