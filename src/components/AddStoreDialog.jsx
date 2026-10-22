@@ -79,7 +79,7 @@ const AddStoreDialog = ({ onAdded, onCancel }) => {
           <button type="button" className="add-store-cancel" onClick={onCancel} disabled={isSaving}>
             Cancel
           </button>
-          <button type="submit" className="add-store-submit" disabled={isSaving || !name.trim()}>
+          <button type="submit" className="add-store-submit" onClick={handleSubmit} disabled={isSaving || !name.trim()}>
             {isSaving ? 'Adding…' : 'Add store'}
           </button>
         </div>
