@@ -86,7 +86,7 @@ const ShoppingItemForm = ({ item, onSave, onCancel }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="salad">Salad</label>
+            <label htmlFor="salad">Meal</label>
             <select
               id="salad"
               name="salad"

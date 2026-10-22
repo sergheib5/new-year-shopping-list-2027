@@ -209,7 +209,7 @@ const ShoppingList = () => {
                 className={`filter-button filter-button-salad ${selectedSalad === 'All' ? 'active' : ''}`}
                 onClick={() => setSelectedSalad('All')}
               >
-                All Salads
+                All Meals
               </button>
               <button
                 className={`filter-button filter-button-salad ${selectedSalad === 'General' ? 'active' : ''}`}

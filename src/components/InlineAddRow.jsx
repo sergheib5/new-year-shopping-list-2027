@@ -141,7 +141,7 @@ const InlineAddRow = ({ onSave }) => {
           </select>
         </div>
       ) : (
-        <p className="inline-add-note">No meal links yet. Items stay on your shopping list; add a salad in Menu if you want to group groceries by recipe.</p>
+        <p className="inline-add-note">No meals yet. Add a meal in Menu to group its groceries together.</p>
       )}
       <button type="submit" className="inline-add-submit" disabled={isSaving || !formData.name.trim()}>
         {isSaving ? 'Saving…' : 'Add item'}

@@ -138,23 +138,23 @@ const Menu = () => {
             )}
           </section>
 
-          {/* Salads Section */}
+          {/* Meals Section */}
           <section className="menu-section">
             <div className="section-header">
-              <h2>🥗 Salads</h2>
+              <h2>🍽️ Meals</h2>
               <button 
                 className="add-section-button"
                 onClick={() => handleAddNew('salad')}
               >
-                + Add
+                + Add meal
               </button>
             </div>
             {saladItems.length === 0 ? (
-              <div className="empty-section">No salads yet</div>
+              <div className="empty-section">No meals yet</div>
             ) : (
               <div className="salads-table">
                 <div className="table-header">
-                  <div className="col-salad">Salad Name</div>
+                  <div className="col-salad">Meal Name</div>
                   <div className="col-prepared">Prepared By</div>
                   <div className="col-actions"></div>
                 </div>

@@ -93,7 +93,7 @@ const MenuItemForm = ({ item, type, onSave, onCancel }) => {
   const getFormTitle = () => {
     if (item) return 'Edit Menu Item';
     if (type === 'daily') return 'Add Daily Menu Item';
-    if (type === 'salad') return 'Add Salad';
+    if (type === 'salad') return 'Add Meal';
     if (type === 'snack') return 'Add Snack';
     if (type === 'drink') return 'Add Drink';
     return 'Add Menu Item';
@@ -149,7 +149,7 @@ const MenuItemForm = ({ item, type, onSave, onCancel }) => {
           {type === 'salad' && (
             <>
               <div className="form-group">
-                <label htmlFor="name">Salad Name *</label>
+                <label htmlFor="name">Meal Name *</label>
                 <input
                   type="text"
                   id="name"
