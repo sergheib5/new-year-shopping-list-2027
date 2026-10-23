@@ -46,12 +46,13 @@
 .inline-add-note { color:#6a778b; font-size:12px; }
 .shopping-list-table { overflow:hidden; }
 .table-body { display:flex; flex-direction:column; }
-.shopping-item-row { grid-template-columns:34px minmax(150px,1fr) minmax(90px,auto) minmax(100px,auto) 54px 32px; grid-template-areas:"check item store meal quantity actions"; gap:12px; min-height:68px; padding:13px 17px; border-bottom:1px solid #edf0f4; }
+.shopping-item-row { grid-template-columns:34px minmax(150px,1fr) minmax(90px,auto) minmax(90px,auto) 54px minmax(70px,.4fr) 32px; grid-template-areas:"check item store meal quantity notes actions"; gap:12px; min-height:68px; padding:13px 17px; border-bottom:1px solid #edf0f4; }
 .shopping-item-row:not(.editing) .col-checkbox { grid-area:check; }
 .shopping-item-row:not(.editing) .col-item { grid-area:item; }
 .shopping-item-row:not(.editing) .col-store { grid-area:store; }
 .shopping-item-row:not(.editing) .col-salad { grid-area:meal; }
 .shopping-item-row:not(.editing) .col-quantity { grid-area:quantity; }
+.shopping-item-row:not(.editing) .col-notes { grid-area:notes; }
 .shopping-item-row:not(.editing) .col-actions { grid-area:actions; }
 .shopping-item-row:hover { background:#f9fbfd; }
 .shopping-item-row.checked { background:#f5f8fb; opacity:.68; }
@@ -80,8 +81,10 @@
   .inline-add-row .col-salad-compact { grid-column:2; grid-row:2; }
   .inline-add-row .inline-add-note { grid-column:1/-1; }
   .inline-add-row .inline-add-submit { grid-column:1/-1; }
-  .shopping-item-row:not(.editing) { grid-template-columns:30px minmax(0,1fr) auto 32px; grid-template-areas:"check item quantity actions" "check store meal actions"; gap:5px 9px; min-height:70px; padding:11px 12px; }
-  .shopping-item-row:not(.editing) .col-store,.shopping-item-row:not(.editing) .col-salad { justify-self:start; max-width:100%; }
+  .shopping-item-row:not(.editing) { grid-template-columns:30px minmax(0,1fr) auto 32px; grid-template-areas:"check item quantity actions" "check meal store actions"; gap:5px 9px; min-height:70px; padding:11px 12px; }
+  .shopping-item-row:not(.editing) .col-store,.shopping-item-row:not(.editing) .col-salad { max-width:100%; }
+  .shopping-item-row:not(.editing) .col-store { justify-self:end; }
+  .shopping-item-row:not(.editing) .col-salad { justify-self:start; }
   .shopping-item-row:not(.editing) .col-quantity { justify-self:end; padding:3px 8px; border-radius:99px; background:#f0f3f7; font-weight:700; }
   .store-badge,.salad-badge { padding:4px 8px; font-size:10px; }
   .col-item { font-size:14px; }
