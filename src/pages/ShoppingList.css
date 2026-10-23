@@ -172,6 +172,22 @@
     gap: 6px;
   }
 
+  .store-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .store-filter .filter-group-label {
+    flex: 0 0 auto;
+  }
+
+  .store-filter .filter-button {
+    flex: 0 0 auto;
+  }
+
   .filter-group-label {
     font-size: 11px;
   }
