@@ -91,23 +91,33 @@ const MenuItemForm = ({ item, type, onSave, onCancel }) => {
   };
 
   const getFormTitle = () => {
-    if (item) return 'Edit Menu Item';
-    if (type === 'daily') return 'Add Daily Menu Item';
-    if (type === 'salad') return 'Add Meal';
-    if (type === 'snack') return 'Add Snack';
-    if (type === 'drink') return 'Add Drink';
-    return 'Add Menu Item';
+    if (item) {
+      if (type === 'daily') return 'Edit day’s plan';
+      if (type === 'salad') return 'Edit meal idea';
+      return `Edit ${type || 'menu'} item`;
+    }
+    if (type === 'daily') return 'Plan a day';
+    if (type === 'salad') return 'Add a meal idea';
+    if (type === 'snack') return 'Add a snack';
+    if (type === 'drink') return 'Add a drink';
+    return 'Add to menu';
   };
 
   return (
     <div className="form-overlay">
-      <div className="form-container">
-        <h2 className="form-title">{getFormTitle()}</h2>
+      <div className="form-container" role="dialog" aria-modal="true" aria-labelledby="menu-form-title">
+        <div className="form-heading">
+          <div>
+            <p className="form-eyebrow">MENU PLANNER</p>
+            <h2 className="form-title" id="menu-form-title">{getFormTitle()}</h2>
+          </div>
+          <button type="button" className="form-close" onClick={onCancel} disabled={isSubmitting} aria-label="Close form">×</button>
+        </div>
         <form onSubmit={handleSubmit} className="menu-item-form">
           {type === 'daily' && (
             <>
               <div className="form-group">
-                <label htmlFor="date">Date *</label>
+                <label htmlFor="date">Day or date *</label>
                 <input
                   type="text"
                   id="date"
@@ -115,12 +125,14 @@ const MenuItemForm = ({ item, type, onSave, onCancel }) => {
                   value={formData.date}
                   onChange={handleChange}
                   required
-                  placeholder="e.g., Dec 30, Jan 1"
+                  placeholder="e.g., Dec 30 or Jan 1"
+                  aria-describedby="date-hint"
                   className="form-input"
                 />
+                <span className="form-hint" id="date-hint">A short label is fine; it will appear on your plan as written.</span>
               </div>
               <div className="form-group">
-                <label htmlFor="lunch">Lunch</label>
+                <label htmlFor="lunch">Lunch <span>Optional</span></label>
                 <input
                   type="text"
                   id="lunch"
@@ -132,7 +144,7 @@ const MenuItemForm = ({ item, type, onSave, onCancel }) => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="dinner">Dinner</label>
+                <label htmlFor="dinner">Dinner <span>Optional</span></label>
                 <input
                   type="text"
                   id="dinner"

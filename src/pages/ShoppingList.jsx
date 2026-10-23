@@ -191,6 +191,19 @@ const ShoppingList = () => {
       <Header />
       <main className="main-content">
         <div className="shopping-list-container">
+          <section className="shopping-intro" aria-labelledby="shopping-title">
+            <div>
+              <p className="shopping-eyebrow">PLAN TOGETHER</p>
+              <h1 id="shopping-title">Shopping list</h1>
+              <p className="shopping-subtitle">A shared list for everything you need.</p>
+            </div>
+            {items.length > 0 && (
+              <div className="shopping-summary" aria-live="polite">
+                <strong>{items.length - completedCount}</strong>
+                <span>left to get</span>
+              </div>
+            )}
+          </section>
           {items.length > 0 && (
             <section className="shopping-progress" aria-label="Shopping progress">
               <div className="shopping-progress-copy" aria-live="polite">
@@ -211,7 +224,7 @@ const ShoppingList = () => {
           )}
 
           {/* Store filter */}
-          <div className="store-filter">
+          <div className="store-filter" aria-label="Filter items by store">
             <span className="filter-group-label">Shop at</span>
             <button
               className={`filter-button ${selectedStore === 'All' ? 'active' : ''}`}
@@ -274,17 +287,13 @@ const ShoppingList = () => {
           )}
           
           {/* Search field */}
-          <SearchField
-            value={searchQuery}
-            onChange={setSearchQuery}
-            placeholder="Search items..."
-          />
+          <div className="shopping-search"><SearchField value={searchQuery} onChange={setSearchQuery} placeholder="Search your list" /></div>
           
           {/* Add form at the top */}
           <InlineAddRow
             onSave={handleAddItem}
           />
-          <div className="shopping-list-table">
+          <section className="shopping-list-table" aria-label="Shopping items">
             <div className="table-body">
               {filteredItems.length === 0 ? (
                 <div className="empty-message">
@@ -310,7 +319,7 @@ const ShoppingList = () => {
                 ))
               )}
             </div>
-          </div>
+          </section>
         </div>
       </main>
       <BottomNav />

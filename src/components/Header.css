@@ -1,11 +1,64 @@
 .app-header {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: #18355d;
   color: white;
-  padding: 8px 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 34px 16px 9px;
+  box-shadow: 0 3px 14px rgba(20, 40, 70, 0.15);
   position: sticky;
   top: 0;
   z-index: 100;
+  isolation: isolate;
+}
+
+.goat-animation-layer { position:absolute; inset:0; z-index:3; overflow:hidden; pointer-events:none; }
+.header-winter-decor { position:absolute; inset:0; z-index:1; pointer-events:none; }
+.header-tree { position:absolute; bottom:0; width:clamp(50px,7.5vw,80px); height:clamp(60px,9vw,86px); overflow:visible; filter:drop-shadow(0 2px 3px rgba(5,18,34,.3)); }
+.header-tree-left { left:4px; }
+.header-tree-right { right:4px; transform:scaleX(-1); }
+.tree-light { transform-box:fill-box; transform-origin:center; animation:tree-twinkle 1800ms ease-in-out infinite alternate; }
+.light-two { animation-delay:-500ms; }
+.light-three { animation-delay:-1100ms; }
+.light-four { animation-delay:-250ms; }
+.light-five { animation-delay:-900ms; }
+.light-six { animation-delay:-1400ms; }
+.light-seven { animation-delay:-700ms; }
+@keyframes tree-twinkle { from { opacity:.62; transform:scale(.82); } to { opacity:1; transform:scale(1.22); } }
+@media (max-width:480px) {
+  .header-tree { width:42px; height:52px; }
+  .header-tree-left { left:2px; }
+  .header-tree-right { right:2px; }
+}
+.goat-traversal { position:absolute; top:50px; left:0; display:block; width:62px; height:39px; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 18s linear infinite; }
+.goat-hop { display:block; width:62px; height:39px; overflow:visible; animation:goat-hop 2250ms ease-in-out infinite; transform-origin:50% 100%; }
+.goat-leg { transform-box:fill-box; transform-origin:50% 0%; animation-duration:2250ms; animation-iteration-count:infinite; animation-timing-function:cubic-bezier(.35,.02,.45,1); }
+.goat-leg.leg-one,.goat-leg.leg-two { animation-name:goat-hind-hop; }
+.goat-leg.leg-three,.goat-leg.leg-four { animation-name:goat-front-hop; }
+.goat-scarf-tail { transform-box:fill-box; transform-origin:100% 50%; animation:goat-scarf-flutter 2250ms ease-out infinite; }
+@keyframes goat-traverse {
+  0%, 2% { transform:translateX(0) scaleX(1); }
+  48%, 50% { transform:translateX(calc(100vw - 62px)) scaleX(1); }
+  52% { transform:translateX(calc(100vw - 62px)) scaleX(-1); }
+  98% { transform:translateX(0) scaleX(-1); }
+  100% { transform:translateX(0) scaleX(1); }
+}
+@keyframes goat-hop {
+  0%, 8% { transform:translateY(0) scaleY(.78) rotate(0); }
+  15% { transform:translateY(2px) scaleY(.72) rotate(2deg); }
+  22% { transform:translateY(-8px) scaleY(1.18) rotate(-5deg); }
+  38% { transform:translateY(-36px) scaleY(.98) rotate(-2deg); }
+  50% { transform:translateY(-38px) scaleY(1) rotate(1deg); }
+  62% { transform:translateY(-32px) scaleY(1.02) rotate(3deg); }
+  78% { transform:translateY(-10px) scaleY(.94) rotate(4deg); }
+  86% { transform:translateY(1px) scaleY(.72) rotate(-2deg); }
+  92% { transform:translateY(-4px) scaleY(.94) rotate(1deg); }
+  100% { transform:translateY(0) scaleY(.84) rotate(0); }
+}
+@keyframes goat-hind-hop { 0%,8% { transform:rotate(18deg); } 15% { transform:rotate(32deg); } 22% { transform:rotate(-32deg); } 40% { transform:rotate(-18deg); } 58% { transform:rotate(-28deg); } 78% { transform:rotate(8deg); } 86% { transform:rotate(30deg); } 92% { transform:rotate(12deg); } 100% { transform:rotate(18deg); } }
+@keyframes goat-front-hop { 0%,8% { transform:rotate(-18deg); } 15% { transform:rotate(-30deg); } 22% { transform:rotate(30deg); } 40% { transform:rotate(-24deg); } 58% { transform:rotate(-30deg); } 78% { transform:rotate(22deg); } 86% { transform:rotate(-28deg); } 92% { transform:rotate(-10deg); } 100% { transform:rotate(-18deg); } }
+@keyframes goat-scarf-flutter { 0%,8% { transform:rotate(0) skewY(0); } 20% { transform:rotate(9deg) skewY(5deg); } 42% { transform:rotate(-9deg) skewY(-4deg); } 58% { transform:rotate(-5deg) skewY(-2deg); } 78% { transform:rotate(9deg) skewY(4deg); } 88% { transform:rotate(-11deg) skewY(-5deg); } 100% { transform:rotate(0) skewY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .goat-animation-layer { display:none; }
+  .goat-traversal,.goat-hop,.goat-leg,.goat-scarf-tail { animation:none; }
+  .tree-light { animation:none; }
 }
 
 .header-content {
@@ -14,6 +67,7 @@
   align-items: center;
   flex-wrap: nowrap;
   position: relative;
+  z-index: 2;
   gap: 8px;
   max-width: 1200px;
   margin: 0 auto;
@@ -28,7 +82,7 @@
 
 @media (max-width: 768px) {
   .app-header {
-    padding: 6px 12px;
+    padding: 34px 12px 7px;
   }
 
   .header-content {
@@ -39,11 +93,12 @@
 
 @media (max-width: 480px) {
   .app-header {
-    padding: 4px 8px;
+    padding: 34px 8px 7px;
   }
 
   .header-content {
     gap: 4px;
+    min-width: 0;
   }
 }
 
