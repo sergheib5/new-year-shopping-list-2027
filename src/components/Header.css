@@ -10,6 +10,23 @@
 }
 
 .goat-animation-layer { position:absolute; inset:0; z-index:3; overflow:hidden; pointer-events:none; }
+.header-winter-decor { position:absolute; inset:0; z-index:1; pointer-events:none; }
+.header-tree { position:absolute; bottom:0; width:clamp(50px,7.5vw,80px); height:clamp(60px,9vw,86px); overflow:visible; filter:drop-shadow(0 2px 3px rgba(5,18,34,.3)); }
+.header-tree-left { left:4px; }
+.header-tree-right { right:4px; transform:scaleX(-1); }
+.tree-light { transform-box:fill-box; transform-origin:center; animation:tree-twinkle 1800ms ease-in-out infinite alternate; }
+.light-two { animation-delay:-500ms; }
+.light-three { animation-delay:-1100ms; }
+.light-four { animation-delay:-250ms; }
+.light-five { animation-delay:-900ms; }
+.light-six { animation-delay:-1400ms; }
+.light-seven { animation-delay:-700ms; }
+@keyframes tree-twinkle { from { opacity:.62; transform:scale(.82); } to { opacity:1; transform:scale(1.22); } }
+@media (max-width:480px) {
+  .header-tree { width:42px; height:52px; }
+  .header-tree-left { left:2px; }
+  .header-tree-right { right:2px; }
+}
 .goat-traversal { position:absolute; top:50px; left:0; display:block; width:62px; height:39px; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 18s linear infinite; }
 .goat-hop { display:block; width:62px; height:39px; overflow:visible; animation:goat-hop 2250ms ease-in-out infinite; transform-origin:50% 100%; }
 .goat-leg { transform-box:fill-box; transform-origin:50% 0%; animation-duration:2250ms; animation-iteration-count:infinite; animation-timing-function:cubic-bezier(.35,.02,.45,1); }
@@ -41,6 +58,7 @@
 @media (prefers-reduced-motion: reduce) {
   .goat-animation-layer { display:none; }
   .goat-traversal,.goat-hop,.goat-leg,.goat-scarf-tail { animation:none; }
+  .tree-light { animation:none; }
 }
 
 .header-content {

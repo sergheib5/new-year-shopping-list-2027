@@ -1,8 +1,37 @@
 import NewYearCountdown from './NewYearCountdown';
 import './Header.css';
 
+const ChristmasTree = ({ side }) => (
+  <svg className={`header-tree header-tree-${side}`} viewBox="0 0 100 120" aria-hidden="true">
+    <g className="tree-art">
+      <path d="m50 3 3.6 7.3 8 .9-5.9 5.5 1.5 7.8-7.2-3.9-7.2 3.9 1.4-7.8-5.8-5.5 8-.9Z" fill="#ffd166" stroke="#fff0ba" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M50 17 34 42q8-4 16-2 8-2 16 2L50 17Z" fill="#23865e" stroke="#a6e0a9" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M50 32 25 65q12-5 25-2 13-3 25 2L50 32Z" fill="#19774f" stroke="#8bd39c" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M50 49 14 91q18-7 36-3 18-4 36 3L50 49Z" fill="#126846" stroke="#7dc58c" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M40 39q10 7 20 0M32 62q18 9 36 0M22 85q28 10 56 0" fill="none" stroke="#f0cb75" strokeWidth="2.3" strokeLinecap="round" />
+      <path d="M47 88h6v16h-6z" fill="#8b5939" />
+      <circle className="tree-light light-one" cx="42" cy="37" r="2.6" fill="#ff6b6b" />
+      <circle className="tree-light light-two" cx="57" cy="51" r="2.7" fill="#ffe066" />
+      <circle className="tree-light light-three" cx="36" cy="64" r="2.7" fill="#6ec6ff" />
+      <circle className="tree-light light-four" cx="66" cy="68" r="2.8" fill="#ff6b6b" />
+      <circle className="tree-light light-five" cx="27" cy="83" r="2.8" fill="#ffe066" />
+      <circle className="tree-light light-six" cx="51" cy="78" r="2.7" fill="#f7f7ff" />
+      <circle className="tree-light light-seven" cx="74" cy="84" r="2.8" fill="#6ec6ff" />
+      <path d="M15 103h23v15H15z" fill="#d94d5b" stroke="#ffd6a5" strokeWidth="1.2" />
+      <path d="M26.5 103v15M15 108h23" stroke="#ffe7a6" strokeWidth="2" />
+      <path d="M63 106h21v12H63z" fill="#4d82d8" stroke="#d5e5ff" strokeWidth="1.2" />
+      <path d="M73.5 106v12M63 110h21" stroke="#ffe7a6" strokeWidth="2" />
+      <path d="M24 103c-5-4-2-7 1-5 3-4 7 0 1 5m47 3c-4-4-1-6 2-4 2-3 6 0 1 4" fill="none" stroke="#ffe7a6" strokeWidth="1.5" strokeLinecap="round" />
+    </g>
+  </svg>
+);
+
 const Header = () => (
   <header className="app-header">
+    <div className="header-winter-decor" aria-hidden="true">
+      <ChristmasTree side="left" />
+      <ChristmasTree side="right" />
+    </div>
     <div className="header-content">
       <NewYearCountdown />
     </div>
