@@ -10,17 +10,18 @@
 }
 
 .goat-animation-layer { position:absolute; top:0; left:0; z-index:2; width:100%; height:25px; overflow:hidden; pointer-events:none; }
-.goat-traversal { position:absolute; top:0; left:0; display:block; width:38px; height:25px; opacity:0; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 25s ease-in-out infinite; }
+.goat-traversal { position:absolute; top:0; left:0; display:block; width:38px; height:25px; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 18s linear infinite; }
+.goat-facing { display:block; width:100%; height:100%; transform-origin:center; animation:goat-turn 18s steps(1,end) infinite; }
 .goat-hop { display:block; width:38px; height:25px; overflow:visible; animation:goat-hop 720ms ease-in-out infinite; transform-origin:50% 100%; }
 .goat-leg { transform-box:fill-box; transform-origin:50% 0%; animation-duration:360ms; animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-direction:alternate; }
 .goat-leg.leg-one,.goat-leg.leg-four { animation-name:goat-stride-forward; }
 .goat-leg.leg-two,.goat-leg.leg-three { animation-name:goat-stride-back; }
 @keyframes goat-traverse {
-  0%, 4% { opacity:0; transform:translateX(-40px); }
-  6% { opacity:1; }
-  27% { opacity:1; transform:translateX(calc(100vw + 40px)); }
-  30%, 100% { opacity:0; transform:translateX(calc(100vw + 40px)); }
+  0%, 4% { transform:translateX(0); }
+  48%, 52% { transform:translateX(calc(100vw - 38px)); }
+  96%, 100% { transform:translateX(0); }
 }
+@keyframes goat-turn { 0%, 49.99% { transform:scaleX(1); } 50%, 100% { transform:scaleX(-1); } }
 @keyframes goat-hop {
   0%, 37%, 70%, 100% { transform:translateY(0) scaleY(1); }
   12% { transform:translateY(-5px) scaleY(1.04); }
@@ -32,7 +33,8 @@
 @keyframes goat-stride-forward { from { transform:rotate(22deg); } to { transform:rotate(-22deg); } }
 @keyframes goat-stride-back { from { transform:rotate(-22deg); } to { transform:rotate(22deg); } }
 @media (prefers-reduced-motion: reduce) {
-  .goat-traversal,.goat-hop { display:none; animation:none; }
+  .goat-animation-layer { display:none; }
+  .goat-traversal,.goat-facing,.goat-hop,.goat-leg { animation:none; }
 }
 
 .header-content {

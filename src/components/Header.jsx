@@ -8,6 +8,7 @@ const Header = () => (
     </div>
     <div className="goat-animation-layer" aria-hidden="true">
       <span className="goat-traversal">
+        <span className="goat-facing">
         <svg className="goat-hop" viewBox="0 0 48 32" role="presentation">
           <path d="M7 13c1-5 7-7 14-6 5-1 11 2 13 7l-3 8H12c-5 0-7-4-5-9Z" fill="#f6f1e8" stroke="#dbcba9" strokeWidth="1.2" />
           <path d="m29 8-2-5 5 4m2 1 3-5 1 6" fill="#f6f1e8" stroke="#e3bd71" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
@@ -21,6 +22,7 @@ const Header = () => (
           <g className="goat-leg leg-three"><path d="m26 20-1 7 2 1" fill="none" stroke="#f6f1e8" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" /><path d="m25 27 2 1" fill="none" stroke="#e3bd71" strokeWidth="1.8" strokeLinecap="round" /></g>
           <g className="goat-leg leg-four"><path d="m30 19 2 7 2 1" fill="none" stroke="#f6f1e8" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" /><path d="m32 26 2 1" fill="none" stroke="#e3bd71" strokeWidth="1.8" strokeLinecap="round" /></g>
         </svg>
+        </span>
       </span>
     </div>
   </header>
