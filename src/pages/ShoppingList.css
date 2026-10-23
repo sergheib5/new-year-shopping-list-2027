@@ -46,7 +46,7 @@
 .inline-add-note { color:#6a778b; font-size:12px; }
 .shopping-list-table { overflow:hidden; }
 .table-body { display:flex; flex-direction:column; }
-.shopping-item-row { grid-template-columns:34px minmax(150px,1fr) minmax(90px,auto) minmax(90px,auto) 54px minmax(70px,.4fr) 32px; grid-template-areas:"check item store meal quantity notes actions"; gap:12px; min-height:68px; padding:13px 17px; border-bottom:1px solid #edf0f4; }
+.shopping-item-row { grid-template-columns:34px minmax(150px,1fr) minmax(90px,auto) minmax(90px,auto) 54px minmax(70px,.4fr) 32px; grid-template-areas:"check item meal store quantity notes actions"; gap:12px; min-height:68px; padding:13px 17px; border-bottom:1px solid #edf0f4; }
 .shopping-item-row:not(.editing) .col-checkbox { grid-area:check; }
 .shopping-item-row:not(.editing) .col-item { grid-area:item; }
 .shopping-item-row:not(.editing) .col-store { grid-area:store; }
