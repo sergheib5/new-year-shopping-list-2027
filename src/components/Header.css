@@ -10,38 +10,26 @@
 }
 
 .goat-animation-layer { position:absolute; inset:0; z-index:3; overflow:hidden; pointer-events:none; }
-.goat-traversal { position:absolute; top:0; left:0; display:block; width:62px; height:39px; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 18s linear infinite; }
+.goat-traversal { position:absolute; top:50px; left:0; display:block; width:62px; height:39px; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 18s linear infinite; }
 .goat-hop { display:block; width:62px; height:39px; overflow:visible; animation:goat-hop 2250ms ease-in-out infinite; transform-origin:50% 100%; }
 .goat-leg { transform-box:fill-box; transform-origin:50% 0%; animation-duration:2250ms; animation-iteration-count:infinite; animation-timing-function:cubic-bezier(.35,.02,.45,1); }
 .goat-leg.leg-one,.goat-leg.leg-two { animation-name:goat-hind-hop; }
 .goat-leg.leg-three,.goat-leg.leg-four { animation-name:goat-front-hop; }
 .goat-scarf-tail { transform-box:fill-box; transform-origin:100% 50%; animation:goat-scarf-flutter 1125ms ease-in-out infinite alternate; }
 @keyframes goat-traverse {
-  0% { transform:translate(0,50px) scaleX(1); }
-  6.25% { transform:translate(calc(12.5vw - 7.75px),0) scaleX(1); }
-  12.5% { transform:translate(calc(25vw - 15.5px),50px) scaleX(1); }
-  18.75% { transform:translate(calc(37.5vw - 23.25px),0) scaleX(1); }
-  25% { transform:translate(calc(50vw - 31px),50px) scaleX(1); }
-  31.25% { transform:translate(calc(62.5vw - 38.75px),0) scaleX(1); }
-  37.5% { transform:translate(calc(75vw - 46.5px),50px) scaleX(1); }
-  43.75% { transform:translate(calc(87.5vw - 54.25px),0) scaleX(1); }
-  48%,50% { transform:translate(calc(100vw - 62px),50px) scaleX(1); }
-  52% { transform:translate(calc(100vw - 62px),50px) scaleX(-1); }
-  56.25% { transform:translate(calc(87.5vw - 54.25px),0) scaleX(-1); }
-  62.5% { transform:translate(calc(75vw - 46.5px),50px) scaleX(-1); }
-  68.75% { transform:translate(calc(62.5vw - 38.75px),0) scaleX(-1); }
-  75% { transform:translate(calc(50vw - 31px),50px) scaleX(-1); }
-  81.25% { transform:translate(calc(37.5vw - 23.25px),0) scaleX(-1); }
-  87.5% { transform:translate(calc(25vw - 15.5px),50px) scaleX(-1); }
-  93.75% { transform:translate(calc(12.5vw - 7.75px),0) scaleX(-1); }
-  98% { transform:translate(0,50px) scaleX(-1); }
-  100% { transform:translate(0,50px) scaleX(1); }
+  0%, 2% { transform:translateX(0) scaleX(1); }
+  48%, 50% { transform:translateX(calc(100vw - 62px)) scaleX(1); }
+  52% { transform:translateX(calc(100vw - 62px)) scaleX(-1); }
+  98% { transform:translateX(0) scaleX(-1); }
+  100% { transform:translateX(0) scaleX(1); }
 }
 @keyframes goat-hop {
-  0%, 100% { transform:scaleY(.88); }
-  12% { transform:scaleY(1); }
-  50% { transform:scaleY(1.04); }
-  88% { transform:scaleY(.9); }
+  0%, 7% { transform:translateY(0) scaleY(.82); }
+  16% { transform:translateY(-7px) scaleY(1.05); }
+  34% { transform:translateY(-37px) scaleY(1); }
+  52% { transform:translateY(-30px) scaleY(1.02); }
+  76% { transform:translateY(-3px) scaleY(.92); }
+  84%, 100% { transform:translateY(0) scaleY(.82); }
 }
 @keyframes goat-hind-hop { 0%,100% { transform:rotate(0); } 12% { transform:rotate(26deg); } 42% { transform:rotate(-24deg); } 62% { transform:rotate(-18deg); } 83% { transform:rotate(22deg); } 92% { transform:rotate(0); } }
 @keyframes goat-front-hop { 0%,100% { transform:rotate(0); } 12% { transform:rotate(-23deg); } 42% { transform:rotate(27deg); } 62% { transform:rotate(18deg); } 83% { transform:rotate(-25deg); } 92% { transform:rotate(0); } }
