@@ -67,38 +67,49 @@
 
 @media (max-width: 480px) {
   .countdown-container {
-    flex-direction: column;
-    gap: 4px;
-    padding: 7px 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+    padding: 6px 8px;
     max-width: calc(100vw - 72px);
+    white-space: nowrap;
   }
 
   .countdown-heading {
-    gap: 6px;
+    flex: 0 0 auto;
+    gap: 4px;
   }
 
-  .countdown-label,
+  .countdown-label {
+    font-size: 10px;
+  }
+
   .countdown-date {
-    font-size: 11px;
+    font-size: 9px;
   }
 
   .countdown-time {
-    gap: 2px;
+    flex: 0 0 auto;
+    gap: 3px;
   }
 
   .time-unit {
-    min-width: 28px;
+    flex-direction: row;
+    min-width: 0;
+    gap: 1px;
   }
 
   .time-value {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .time-label {
     font-size: 7px;
+    letter-spacing: 0;
   }
 
   .time-separator {
-    font-size: 11px;
+    font-size: 10px;
+    margin: 0;
   }
 }
