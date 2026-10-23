@@ -26,41 +26,6 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.export-button {
-  position: absolute;
-  right: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.export-button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-1px);
-}
-
-.export-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.export-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 @media (max-width: 768px) {
   .app-header {
     padding: 6px 12px;
@@ -69,13 +34,6 @@
   .header-content {
     justify-content: center;
     gap: 6px;
-  }
-
-  .export-button {
-    padding: 5px 8px;
-    font-size: 16px;
-    min-width: 32px;
-    height: 32px;
   }
 }
 
@@ -86,14 +44,6 @@
 
   .header-content {
     gap: 4px;
-  }
-
-  .export-button {
-    right: 0;
-    padding: 4px 6px;
-    font-size: 14px;
-    min-width: 28px;
-    height: 28px;
   }
 }
 
