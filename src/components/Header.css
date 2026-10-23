@@ -1,11 +1,38 @@
 .app-header {
   background: #18355d;
   color: white;
-  padding: 9px 16px;
+  padding: 25px 16px 9px;
   box-shadow: 0 3px 14px rgba(20, 40, 70, 0.15);
   position: sticky;
   top: 0;
   z-index: 100;
+  isolation: isolate;
+}
+
+.goat-animation-layer { position:absolute; top:0; left:0; z-index:2; width:100%; height:25px; overflow:hidden; pointer-events:none; }
+.goat-traversal { position:absolute; top:0; left:0; display:block; width:38px; height:25px; opacity:0; filter:drop-shadow(0 2px 2px rgba(10,25,45,.35)); animation:goat-traverse 25s ease-in-out infinite; }
+.goat-hop { display:block; width:38px; height:25px; overflow:visible; animation:goat-hop 720ms ease-in-out infinite; transform-origin:50% 100%; }
+.goat-leg { transform-box:fill-box; transform-origin:50% 0%; animation-duration:360ms; animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-direction:alternate; }
+.goat-leg.leg-one,.goat-leg.leg-four { animation-name:goat-stride-forward; }
+.goat-leg.leg-two,.goat-leg.leg-three { animation-name:goat-stride-back; }
+@keyframes goat-traverse {
+  0%, 4% { opacity:0; transform:translateX(-40px); }
+  6% { opacity:1; }
+  27% { opacity:1; transform:translateX(calc(100vw + 40px)); }
+  30%, 100% { opacity:0; transform:translateX(calc(100vw + 40px)); }
+}
+@keyframes goat-hop {
+  0%, 37%, 70%, 100% { transform:translateY(0) scaleY(1); }
+  12% { transform:translateY(-5px) scaleY(1.04); }
+  22% { transform:translateY(-3px) scaleY(1); }
+  52% { transform:translateY(-6px) scaleY(1.03); }
+  62% { transform:translateY(-2px) scaleY(1); }
+  84% { transform:translateY(-4px) scaleY(1.02); }
+}
+@keyframes goat-stride-forward { from { transform:rotate(22deg); } to { transform:rotate(-22deg); } }
+@keyframes goat-stride-back { from { transform:rotate(-22deg); } to { transform:rotate(22deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .goat-traversal,.goat-hop { display:none; animation:none; }
 }
 
 .header-content {
@@ -28,7 +55,7 @@
 
 @media (max-width: 768px) {
   .app-header {
-    padding: 6px 12px;
+    padding: 25px 12px 7px;
   }
 
   .header-content {
@@ -39,8 +66,7 @@
 
 @media (max-width: 480px) {
   .app-header {
-    padding: 7px 8px;
-    min-height: 56px;
+    padding: 25px 8px 7px;
   }
 
   .header-content {
